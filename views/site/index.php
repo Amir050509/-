@@ -45,15 +45,25 @@ $icon = static function (string $name, string $extra = ''): string {
                 <?= Html::a('Войти', ['site/login'], ['class' => 'auth-nav-link']) ?>
                 <?= Html::a('Регистрация', ['site/register'], ['class' => 'auth-nav-button']) ?>
             <?php else: ?>
-                <span class="signed-in-name"><?= Html::encode(Yii::$app->user->identity->display_name) ?></span>
+                <span class="signed-in-name">Вы вошли: <?= Html::encode(Yii::$app->user->identity->display_name) ?></span>
                 <?= Html::beginForm(['site/logout'], 'post', ['class' => 'logout-form']) ?>
-                    <?= Html::submitButton('Выйти', ['class' => 'auth-nav-link']) ?>
+                    <?= Html::submitButton('Выйти / сменить аккаунт', ['class' => 'auth-nav-link']) ?>
                 <?= Html::endForm() ?>
             <?php endif; ?>
             <button class="icon-button" type="button" data-action="notifications" aria-label="Уведомления"><?= $icon('bell') ?><i class="notification-dot"></i></button>
             <button class="profile-trigger" type="button" data-action="profile" aria-label="Открыть профиль"><?= $avatar('АН', 'peach') ?><span class="profile-chevron">⌄</span></button>
         </div>
     </header>
+
+    <?php if (Yii::$app->user->isGuest): ?>
+        <section class="auth-banner" aria-label="Вход и регистрация">
+            <div><strong>Войдите в свой круг</strong><span>Есть аккаунт? Войдите. Ещё нет? Создайте его за минуту.</span></div>
+            <nav aria-label="Аккаунт">
+                <?= Html::a('Войти', ['site/login'], ['class' => 'button button-soft']) ?>
+                <?= Html::a('Регистрация', ['site/register'], ['class' => 'button button-primary']) ?>
+            </nav>
+        </section>
+    <?php endif; ?>
 
     <div class="page-grid">
         <aside class="left-sidebar">
