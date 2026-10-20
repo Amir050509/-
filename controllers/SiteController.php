@@ -22,7 +22,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        if (getenv('KRUG_PRIVATE_MODE') === '1' && Yii::$app->user->isGuest) {
+        // Guests should land on the login form instead of the demo feed.
+        // Registration is linked directly from that form.
+        if (Yii::$app->user->isGuest) {
             return $this->redirect(['site/login']);
         }
         return $this->render('index');
