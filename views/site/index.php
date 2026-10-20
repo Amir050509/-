@@ -41,9 +41,10 @@ $icon = static function (string $name, string $extra = ''): string {
         <a href="#main-content" class="brand" data-nav="home" aria-label="Круг — главная"><span class="brand-mark">к</span><span>круг</span></a>
         <label class="search-box" aria-label="Поиск по публикациям"><?= $icon('search') ?><input id="global-search" type="search" aria-label="Поиск по публикациям" placeholder="Найти людей, идеи, места…" autocomplete="off"><kbd>⌘ K</kbd></label>
         <div class="top-actions">
+            <?= Html::a('Войти', ['site/login'], ['class' => 'auth-nav-link']) ?>
+            <?= Html::a('Регистрация', ['site/register'], ['class' => 'auth-nav-button']) ?>
             <?php if (Yii::$app->user->isGuest): ?>
-                <?= Html::a('Войти', ['site/login'], ['class' => 'auth-nav-link']) ?>
-                <?= Html::a('Регистрация', ['site/register'], ['class' => 'auth-nav-button']) ?>
+                <span class="account-status">Вы не вошли</span>
             <?php else: ?>
                 <span class="signed-in-name">Вы вошли: <?= Html::encode(Yii::$app->user->identity->display_name) ?></span>
                 <?= Html::beginForm(['site/logout'], 'post', ['class' => 'logout-form']) ?>

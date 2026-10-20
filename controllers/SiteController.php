@@ -33,7 +33,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            Yii::$app->user->logout();
         }
 
         $model = new LoginForm();
@@ -47,7 +47,7 @@ class SiteController extends Controller
     public function actionRegister()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            Yii::$app->user->logout();
         }
 
         $model = new RegisterForm();
