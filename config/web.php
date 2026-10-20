@@ -16,8 +16,8 @@ return [
         'cache' => ['class' => yii\caching\FileCache::class],
         'errorHandler' => ['errorAction' => 'site/error'],
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            // Routes work with PHP's built-in server and XAMPP without rewrite rules.
+            // Query routes work with PHP's built-in server and XAMPP without rewrite rules.
+            'enablePrettyUrl' => false,
             'showScriptName' => true,
             'enableStrictParsing' => false,
         ],
