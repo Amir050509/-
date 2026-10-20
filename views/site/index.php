@@ -97,7 +97,7 @@ $icon = static function (string $name, string $extra = ''): string {
                 </article>
             </section>
             <div class="empty-state" id="empty-state" hidden><span class="empty-emoji">◡̈</span><strong>Здесь пока пусто</strong><p>Попробуй другой фильтр или загляни позже.</p><button class="button button-soft" data-nav="home">Показать всю ленту</button></div>
-            <button class="load-more" data-action="load-more">Ты всё посмотрел <span>✳</span></button>
+            <button class="load-more" data-action="load-more">Показать ещё публикации <span>✳</span></button>
         </main>
 
         <aside class="right-sidebar">

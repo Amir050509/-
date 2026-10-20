@@ -90,6 +90,8 @@ button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: .56; }
 .notification-item small, .story-preview p, .error-page p,
 .mobile-nav button { color: var(--text-secondary); }
 
+.notification-item p { flex: 1; min-width: 0; }
+
 .section-heading, .sidebar-legal, .eyebrow, .story-item, .post-author > span,
 .post-stats, .post-stats > button, .show-comments, .load-more,
 .right-legal, .modal-footnote, .attending-avatars small { color: var(--text-muted); }
