@@ -6,9 +6,9 @@ $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset]);
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1']);
 $this->registerMetaTag(['name' => 'theme-color', 'content' => '#f6f7f9']);
-$this->registerCssFile('@web/css/app.css', ['depends' => [yii\web\YiiAsset::class]]);
-$this->registerCssFile('@web/css/design-system.css', ['depends' => [yii\web\YiiAsset::class]]);
-$this->registerJsFile('@web/js/app.js', ['depends' => [yii\web\YiiAsset::class], 'defer' => true]);
+$this->registerCssFile('@web/css/app.css');
+$this->registerCssFile('@web/css/design-system.css');
+$this->registerJsFile('@web/js/app.js', ['defer' => true]);
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>
