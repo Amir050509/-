@@ -8,7 +8,10 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'theme-color', 'content' => '#f6f7f9']);
 $this->registerCssFile('@web/css/app.css');
 $this->registerCssFile('@web/css/design-system.css');
-$this->registerJsFile('@web/js/app.js', ['defer' => true]);
+$this->registerCssFile('@web/css/auth.css');
+if ($this->context->action->id === 'index') {
+    $this->registerJsFile('@web/js/app.js', ['defer' => true]);
+}
 ?>
 <?php $this->beginPage() ?>
 <!doctype html>

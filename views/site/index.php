@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 
 $this->title = 'Круг — люди рядом';
+$displayName = Yii::$app->user->isGuest ? 'Александра Новикова' : Yii::$app->user->identity->display_name;
+$firstName = preg_split('/\s+/u', trim($displayName))[0] ?: 'Друг';
 $weekdays = ['ВОСКРЕСЕНЬЕ', 'ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА', 'СУББОТА'];
 $months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 $today = $weekdays[(int) date('w')] . ', ' . date('j') . ' ' . mb_strtoupper($months[(int) date('n') - 1], 'UTF-8');
@@ -33,12 +35,21 @@ $icon = static function (string $name, string $extra = ''): string {
     return '<svg class="icon ' . Html::encode($extra) . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . ($paths[$name] ?? '') . '</svg>';
 };
 ?>
-<div class="app-shell">
+<div class="app-shell" data-user-id="<?= Yii::$app->user->isGuest ? 'guest' : (int) Yii::$app->user->id ?>" data-display-name="<?= Html::encode($displayName) ?>">
     <a class="skip-link" href="#main-content">Перейти к ленте</a>
     <header class="topbar">
         <a href="#main-content" class="brand" data-nav="home" aria-label="Круг — главная"><span class="brand-mark">к</span><span>круг</span></a>
         <label class="search-box" aria-label="Поиск по публикациям"><?= $icon('search') ?><input id="global-search" type="search" aria-label="Поиск по публикациям" placeholder="Найти людей, идеи, места…" autocomplete="off"><kbd>⌘ K</kbd></label>
         <div class="top-actions">
+            <?php if (Yii::$app->user->isGuest): ?>
+                <?= Html::a('Войти', ['site/login'], ['class' => 'auth-nav-link']) ?>
+                <?= Html::a('Регистрация', ['site/register'], ['class' => 'auth-nav-button']) ?>
+            <?php else: ?>
+                <span class="signed-in-name"><?= Html::encode(Yii::$app->user->identity->display_name) ?></span>
+                <?= Html::beginForm(['site/logout'], 'post', ['class' => 'logout-form']) ?>
+                    <?= Html::submitButton('Выйти', ['class' => 'auth-nav-link']) ?>
+                <?= Html::endForm() ?>
+            <?php endif; ?>
             <button class="icon-button" type="button" data-action="notifications" aria-label="Уведомления"><?= $icon('bell') ?><i class="notification-dot"></i></button>
             <button class="profile-trigger" type="button" data-action="profile" aria-label="Открыть профиль"><?= $avatar('АН', 'peach') ?><span class="profile-chevron">⌄</span></button>
         </div>
@@ -46,7 +57,7 @@ $icon = static function (string $name, string $extra = ''): string {
 
     <div class="page-grid">
         <aside class="left-sidebar">
-            <div class="side-profile"><?= $avatar('АН', 'peach', 'avatar-large') ?><div><strong>Александра Новикова</strong><span>@alex.n</span></div><button class="icon-button tiny" data-action="profile" aria-label="Настроить профиль"><?= $icon('more') ?></button></div>
+            <div class="side-profile"><?= $avatar('АН', 'peach', 'avatar-large') ?><div><strong><?= Html::encode($displayName) ?></strong><span>@krug</span></div><button class="icon-button tiny" data-action="profile" aria-label="Настроить профиль"><?= $icon('more') ?></button></div>
             <nav class="main-nav" aria-label="Главное меню">
                 <button class="nav-item active" data-nav="home" aria-current="page"><?= $icon('home') ?><span>Моя лента</span></button>
                 <button class="nav-item" data-nav="friends"><?= $icon('users') ?><span>Друзья</span><span class="nav-count">4</span></button>
@@ -64,7 +75,7 @@ $icon = static function (string $name, string $extra = ''): string {
         </aside>
 
         <main class="feed-column" id="main-content">
-            <div class="welcome-row"><div><p class="eyebrow"><?= Html::encode($today) ?></p><h1>Привет, Саша <span class="wave" aria-hidden="true">✳</span></h1><p class="welcome-subtitle">Хороший день, чтобы быть на связи.</p></div><button class="button button-soft" data-action="theme" aria-label="Переключить цветовую тему" aria-pressed="false"><?= $icon('sparkles') ?><span class="theme-label">Ночной режим</span></button></div>
+            <div class="welcome-row"><div><p class="eyebrow"><?= Html::encode($today) ?></p><h1>Привет, <?= Html::encode($firstName) ?> <span class="wave" aria-hidden="true">✳</span></h1><p class="welcome-subtitle">Хороший день, чтобы быть на связи.</p></div><button class="button button-soft" data-action="theme" aria-label="Переключить цветовую тему" aria-pressed="false"><?= $icon('sparkles') ?><span class="theme-label">Ночной режим</span></button></div>
             <section class="stories-block" aria-label="Истории"><div class="stories-heading"><h2>Истории</h2><button class="text-button" data-action="all-stories">Все истории <span>→</span></button></div><div class="stories-row" id="stories-row">
                 <button class="story-item add-story" data-action="story"><span class="story-ring own-story"><?= $avatar('АН', 'peach') ?><i aria-hidden="true">+</i></span><span>Ваша история</span></button>
                 <button class="story-item" data-story="Лиза"><span class="story-ring ring-pink"><?= $avatar('ЛК', 'pink') ?></span><span>Лиза</span></button>
@@ -74,7 +85,7 @@ $icon = static function (string $name, string $extra = ''): string {
                 <button class="story-item" data-story="Ника"><span class="story-ring ring-purple"><?= $avatar('НЗ', 'lavender') ?></span><span>Ника</span></button>
             </div></section>
 
-            <section class="composer card"><div class="composer-top"><?= $avatar('АН', 'peach') ?><button class="composer-prompt" data-action="focus-composer">Что у тебя нового, Саша?</button></div><textarea id="post-input" rows="2" maxlength="500" placeholder="Поделись мыслью или моментом…" aria-label="Текст новой публикации"></textarea><div class="composer-bottom"><div class="composer-tools"><button class="tool-button" data-action="attach-photo"><?= $icon('image') ?><span>Фото</span></button><button class="tool-button" data-action="emoji"><?= $icon('smile') ?><span>Настроение</span></button><button class="audience-button" data-action="audience"><span class="audience-dot"></span>Друзья <span class="down-caret">⌄</span></button></div><button class="button button-primary" id="publish-post" data-action="publish-post" disabled>Опубликовать <?= $icon('send') ?></button></div><div id="attachment-preview" class="attachment-preview" hidden></div></section>
+            <section class="composer card"><div class="composer-top"><?= $avatar('АН', 'peach') ?><button class="composer-prompt" data-action="focus-composer">Что у тебя нового, <?= Html::encode($firstName) ?>?</button></div><textarea id="post-input" rows="2" maxlength="500" placeholder="Поделись мыслью или моментом…" aria-label="Текст новой публикации"></textarea><div class="composer-bottom"><div class="composer-tools"><button class="tool-button" data-action="attach-photo"><?= $icon('image') ?><span>Фото</span></button><button class="tool-button" data-action="emoji"><?= $icon('smile') ?><span>Настроение</span></button><button class="audience-button" data-action="audience"><span class="audience-dot"></span>Друзья <span class="down-caret">⌄</span></button></div><button class="button button-primary" id="publish-post" data-action="publish-post" disabled>Опубликовать <?= $icon('send') ?></button></div><div id="attachment-preview" class="attachment-preview" hidden></div></section>
 
             <div class="feed-heading"><div><h2>Твоя лента</h2><span id="feed-caption">Всё самое интересное от друзей</span></div><button class="sort-button" data-action="sort">Сначала новое <span>⌄</span></button></div>
             <div class="filter-chips" id="filter-chips" role="group" aria-label="Фильтр публикаций"><button class="filter-chip selected" data-filter="Все" aria-pressed="true">Все</button><button class="filter-chip" data-filter="Друзья" aria-pressed="false">Друзья</button><button class="filter-chip" data-filter="Дизайн" aria-pressed="false">Дизайн</button><button class="filter-chip" data-filter="Путешествия" aria-pressed="false">Путешествия</button></div>

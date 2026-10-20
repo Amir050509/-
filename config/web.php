@@ -8,11 +8,17 @@ return [
         'request' => [
             'cookieValidationKey' => getenv('YII_COOKIE_VALIDATION_KEY') ?: 'dev-only-change-YII_COOKIE_VALIDATION_KEY',
         ],
+        'db' => require __DIR__ . '/db.php',
+        'user' => [
+            'identityClass' => app\models\User::class,
+            'enableAutoLogin' => false,
+        ],
         'cache' => ['class' => yii\caching\FileCache::class],
         'errorHandler' => ['errorAction' => 'site/error'],
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            // Routes work with PHP's built-in server and XAMPP without rewrite rules.
+            'showScriptName' => true,
             'enableStrictParsing' => false,
         ],
         'log' => [

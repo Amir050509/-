@@ -1,10 +1,12 @@
 (() => {
     'use strict';
 
-    const STORAGE_KEY = 'krug.social.v1';
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-    const defaults = { theme: 'light', liked: [], saved: [], followed: ['Лиза Ким'], hidden: [], circles: [], posts: [], comments: {}, commentLikes: [], joined: false, privateProfile: false, notifications: true, noticeRead: false, myStory: null, draft: '', audience: 'Друзья', loadedMore: false, displayName: 'Александра Новикова', bio: 'Собираю красивые моменты и людей рядом ✨' };
+    const appShell = $('.app-shell');
+    const accountId = appShell?.dataset.userId || 'guest';
+    const STORAGE_KEY = accountId === 'guest' ? 'krug.social.v1' : 'krug.social.user.' + accountId;
+    const defaults = { theme: 'light', liked: [], saved: [], followed: ['Лиза Ким'], hidden: [], circles: [], posts: [], comments: {}, commentLikes: [], joined: false, privateProfile: false, notifications: true, noticeRead: false, myStory: null, draft: '', audience: 'Друзья', loadedMore: false, displayName: appShell?.dataset.displayName || 'Александра Новикова', bio: 'Собираю красивые моменты и людей рядом ✨' };
     let state;
     try { state = { ...defaults, ...JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') }; }
     catch { state = { ...defaults }; }
