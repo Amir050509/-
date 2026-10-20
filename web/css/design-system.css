@@ -1,0 +1,186 @@
+/* Krug UI system: global primitives → semantic aliases → component tokens. */
+:root {
+    --global-neutral-0: #ffffff;
+    --global-neutral-50: #f6f7f9;
+    --global-neutral-100: #ececf0;
+    --global-neutral-600: #626572;
+    --global-neutral-700: #272933;
+    --global-violet-700: #6652bd;
+    --global-violet-50: #f0edfc;
+    --global-green-800: #356941;
+    --global-red-800: #a43d49;
+
+    --page: var(--global-neutral-50);
+    --surface: var(--global-neutral-0);
+    --surface-2: #f8f8fa;
+    --ink: var(--global-neutral-700);
+    --text-primary: var(--global-neutral-700);
+    --text-secondary: var(--global-neutral-600);
+    --text-muted: #696b76;
+    --line: var(--global-neutral-100);
+    --purple: var(--global-violet-700);
+    --purple-dark: var(--global-violet-700);
+    --purple-soft: var(--global-violet-50);
+    --green: var(--global-green-800);
+    --accent-danger: var(--global-red-800);
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --type-caption: 11px;
+    --type-label: 12px;
+    --type-body: 14px;
+    --type-heading-2: 16px;
+    --type-heading-1: 26px;
+    --leading-body: 1.55;
+    --radius-control: 12px;
+    --radius-card: 19px;
+    --focus-ring: #59459f;
+    --control-min-height: 44px;
+    --button-primary-bg: #6652bd;
+    --button-primary-text: #ffffff;
+    --shadow-card: 0 3px 18px rgba(34, 36, 49, .045);
+}
+
+:root[data-theme="dark"] {
+    --global-neutral-0: #22232b;
+    --global-neutral-50: #17181e;
+    --global-neutral-100: #373842;
+    --global-neutral-600: #d0cfda;
+    --global-neutral-700: #f2f1f7;
+    --global-violet-700: #c5b8ff;
+    --global-violet-50: #302b45;
+    --global-green-800: #a2d5a9;
+    --global-red-800: #ffadb5;
+
+    --surface-2: #292a34;
+    --text-muted: #b4b3bf;
+    --focus-ring: #d0c4ff;
+    --button-primary-bg: #6652bd;
+    --button-primary-text: #ffffff;
+    --shadow-card: 0 3px 18px rgba(0, 0, 0, .16);
+}
+
+body { color: var(--text-primary); font-size: var(--type-body); }
+.skip-link { position: fixed; z-index: 90; left: 16px; top: 8px; transform: translateY(-160%); padding: 12px 16px; border-radius: 10px; background: var(--button-primary-bg); color: #fff; font-weight: 700; }
+.skip-link:focus { transform: translateY(0); }
+.card, .right-card { box-shadow: var(--shadow-card); border-radius: var(--radius-card); }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible,
+[role="switch"]:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; }
+button:active:not(:disabled) { transform: translateY(1px); }
+button:disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: .56; }
+
+/* Text and essential controls meet WCAG AA contrast on both themes. */
+.search-box, .search-box input::placeholder, .search-box kbd,
+.profile-chevron, .side-profile span:not(.avatar), .nav-item,
+.section-heading, .plain-icon, .circle-link, .muted-link,
+.sidebar-tip p, .sidebar-legal, .eyebrow, .welcome-subtitle,
+.text-button, .story-item, .composer-prompt, .composer textarea::placeholder,
+.tool-button, .audience-button, .down-caret, .feed-heading span,
+.sort-button, .sort-button span, .filter-chip, .post-author > span,
+.post-stats, .post-stats > button, .post-action, .comment-row p,
+.comment-row > button, .show-comments, .comment-composer input::placeholder,
+.load-more, .empty-state p, .birthday-row span, .friend-details span,
+.event-info > span, .attending-avatars small, .quote-author, .right-legal,
+.modal-description, .modal-profile-head span:not(.avatar), .setting-row span,
+.modal-footnote, .audience-choice small, .notification-item p,
+.notification-item small, .story-preview p, .error-page p,
+.mobile-nav button { color: var(--text-secondary); }
+
+.section-heading, .sidebar-legal, .eyebrow, .story-item, .post-author > span,
+.post-stats, .post-stats > button, .show-comments, .load-more,
+.right-legal, .modal-footnote, .attending-avatars small { color: var(--text-muted); }
+.icon-button, .circle-link, .nav-item, .composer-prompt, .tool-button,
+.audience-button, .sort-button, .filter-chip, .post-action,
+.post-stats > button, .comment-row > button, .show-comments,
+.comment-composer > button, .load-more, .text-button, .plain-icon,
+.right-legal a, .modal-link, .modal-option { min-height: var(--control-min-height); }
+
+.nav-item, .circle-link { font-size: var(--type-label); }
+.section-heading, .eyebrow, .story-item, .sidebar-legal, .right-legal,
+.post-stats, .post-stats > button, .post-author > span, .show-comments,
+.comment-row p, .comment-composer input, .modal-kicker,
+.notification-item p, .notification-item small, .sidebar-tip p,
+.sidebar-tip button, .birthday-row span, .friend-details span,
+.event-info > span, .attending-avatars small { font-size: var(--type-caption); }
+.welcome-subtitle, .composer-prompt, .composer textarea, .post-copy,
+.comment-composer input, .modal-description, .setting-row strong { font-size: var(--type-body); }
+.stories-heading h2, .feed-heading h2, .right-card-heading,
+.side-profile strong { font-size: var(--type-heading-2); }
+.button, .tool-button, .audience-button, .sort-button, .filter-chip,
+.post-action, .text-button, .event-join, .follow-button, .modal-link,
+.form-label, .modal-option { font-size: var(--type-label); }
+.post-copy { line-height: var(--leading-body); }
+.post-tags { font-size: var(--type-label); }
+.comment-row p { line-height: 1.5; }
+
+.icon-button:hover, .plain-icon:hover, .tool-button:hover, .text-button:hover,
+.right-legal a:hover, .modal-link:hover, .modal-option:hover { color: var(--purple); }
+.nav-item.active, .circle-link.active, .circle-link:hover,
+.button-soft, .text-button, .tool-button .icon, .filter-chip.selected,
+.filter-chip:hover, .post-action.is-saved, .modal-link, .modal-option svg,
+.theme-preview { color: var(--purple-dark) !important; }
+.nav-count { background: var(--button-primary-bg); color: var(--button-primary-text); }
+.nav-count.soft { color: var(--text-secondary); }
+.button-primary { background: var(--button-primary-bg); color: var(--button-primary-text); }
+.button-primary:hover { background: #59459f; }
+.birthday-button { color: #873e31; }
+.event-date { color: #59459f; }
+.event-join { color: #59459f; }
+.event-join.joined, .follow-button.followed { color: var(--global-green-800); }
+.follow-button { color: #59459f; }
+.post-action.is-liked, .comment-row > button.comment-liked,
+.modal-option.danger { color: var(--accent-danger); }
+.post-tags, .verified, .event-icon { color: var(--purple-dark); }
+.sidebar-tip button, .modal-link { color: var(--purple-dark); }
+.notification-dot { background: #b44754; }
+.own-story i { background: var(--button-primary-bg); }
+.reaction-stack i { background: #a43d49; }
+.reaction-stack i + i { background: #805c12; }
+.birthday-icon { color: #873e31; }
+.photo-caption { background: rgba(255, 255, 255, .84); padding: 6px 8px; border-radius: 8px; }
+.modal-close { color: var(--text-secondary); min-width: 44px; min-height: 44px; }
+.switch { min-width: 44px; min-height: 26px; padding: 5px; }
+.switch { background: #70727d; }
+.switch.on { background: var(--button-primary-bg); }
+.switch.on i { transform: translateX(17px); }
+.profile-trigger, .post-menu, .section-heading .plain-icon,
+.save-action, .follow-button, .event-join { min-width: 44px; min-height: 44px; }
+.plain-icon { min-width: 44px; }
+.follow-button { width: 44px; height: 44px; }
+.topbar { min-height: 72px; }
+.mobile-nav button { min-width: 48px; min-height: 48px; }
+.mobile-nav .mobile-create { background: var(--button-primary-bg); }
+.button { min-height: 44px; }
+.composer textarea { min-height: 56px; }
+.modal-input { min-height: 44px; color: var(--text-primary); }
+.search-box input { color: var(--text-primary); }
+.comment-composer input { color: var(--text-primary); min-height: 40px; }
+.avatar.peach { color: #82432e; }
+.avatar.lavender { color: #58427f; }
+.avatar.pink { color: #883752; }
+.avatar.yellow { color: #735609; }
+.avatar.blue { color: #385d76; }
+.avatar.green { color: #3e603f; }
+.brand-mark { background: linear-gradient(140deg, #7862cd, #59459f); }
+.focus-within, :where(input, textarea, button, a):focus-visible { scroll-margin-block: 90px; }
+
+@media (max-width: 760px) {
+    .topbar { min-height: 60px; }
+    .mobile-nav { min-height: 66px; }
+    .mobile-nav button { min-height: 48px; }
+    .welcome-row h1 { font-size: 24px; }
+    .photo-grid { min-height: 190px; }
+}
+:root[data-theme="dark"] .birthday-button { background: #3b302f; color: #f0b19b; }
+:root[data-theme="dark"] .follow-button.followed,
+:root[data-theme="dark"] .event-join.joined { background: #263c2c; border-color: #405846; }
+:root[data-theme="dark"] .event-date { background: #332f42; color: #c5b8ff; }
+:root[data-theme="dark"] .story-preview,
+:root[data-theme="dark"] .story-preview p { color: var(--text-secondary); }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
